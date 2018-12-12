@@ -1,3 +1,8 @@
+<?php 
+  require_once '../functions.php';  
+  bx_get_current_user();
+  $categories = bx_fetch('select * from categories;');
+?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -55,33 +60,17 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <?php foreach ($categories as $var): ?>
+                <tr>
                 <td class="text-center"><input type="checkbox"></td>
-                <td>未分类</td>
-                <td>uncategorized</td>
+                <td><?php echo $var['name'] ?></td>
+                <td><?php echo $var['slug'] ?></td>
                 <td class="text-center">
                   <a href="javascript:;" class="btn btn-info btn-xs">编辑</a>
                   <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
                 </td>
               </tr>
-              <tr>
-                <td class="text-center"><input type="checkbox"></td>
-                <td>未分类</td>
-                <td>uncategorized</td>
-                <td class="text-center">
-                  <a href="javascript:;" class="btn btn-info btn-xs">编辑</a>
-                  <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-                </td>
-              </tr>
-              <tr>
-                <td class="text-center"><input type="checkbox"></td>
-                <td>未分类</td>
-                <td>uncategorized</td>
-                <td class="text-center">
-                  <a href="javascript:;" class="btn btn-info btn-xs">编辑</a>
-                  <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-                </td>
-              </tr>
+              <?php endforeach ?>
             </tbody>
           </table>
         </div>
