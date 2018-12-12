@@ -1,3 +1,9 @@
+<?php 
+  require_once '../functions.php';
+  bx_get_current_user();
+  $comments = bx_fetch("select * from comments;");
+  // var_dump($comments);
+ ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -50,42 +56,32 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="danger">
+         <?php foreach ($comments as $value): ?>
+            <tr class="danger">
             <td class="text-center"><input type="checkbox"></td>
-            <td>大大</td>
-            <td>楼主好人，顶一个</td>
-            <td>《Hello world》</td>
-            <td>2016/10/07</td>
-            <td>未批准</td>
+            <td><?php echo $value['author']; ?></td>
+            <td><?php echo $value['content'] ?></td>
+            <td>
+              <?php 
+              $post_id = $value['post_id'];
+              echo bx_fetch_one("select title as num from posts where id = '{$post_id}';")['num']; ?>
+              </td>
+            <td><?php echo $value['created']; ?></td>
+            <td>
+            <?php if ($value['status'] === 'approved'): ?>
+              <?php echo '已批准' ?>
+            <?php elseif ($value['status'] === 'held'): ?>
+              <?php echo "带审核"; ?>
+            <?php elseif ($value['status'] === 'rejected'): ?>
+              <?php echo "未批准" ?>
+            <?php endif ?> 
+            </td>
             <td class="text-center">
               <a href="post-add.php" class="btn btn-info btn-xs">批准</a>
               <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
             </td>
           </tr>
-          <tr>
-            <td class="text-center"><input type="checkbox"></td>
-            <td>大大</td>
-            <td>楼主好人，顶一个</td>
-            <td>《Hello world》</td>
-            <td>2016/10/07</td>
-            <td>已批准</td>
-            <td class="text-center">
-              <a href="post-add.php" class="btn btn-warning btn-xs">驳回</a>
-              <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-            </td>
-          </tr>
-          <tr>
-            <td class="text-center"><input type="checkbox"></td>
-            <td>大大</td>
-            <td>楼主好人，顶一个</td>
-            <td>《Hello world》</td>
-            <td>2016/10/07</td>
-            <td>已批准</td>
-            <td class="text-center">
-              <a href="post-add.php" class="btn btn-warning btn-xs">驳回</a>
-              <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-            </td>
-          </tr>
+         <?php endforeach ?>
         </tbody>
       </table>
     </div>
