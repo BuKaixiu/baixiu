@@ -1,3 +1,8 @@
+<?php 
+  require_once '../functions.php';
+  bx_get_current_user();
+  $post = bx_fetch("select * from posts");
+ ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -59,42 +64,26 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <?php foreach ($post as $var): ?>
+            <tr>
             <td class="text-center"><input type="checkbox"></td>
-            <td>随便一个名称</td>
-            <td>小小</td>
-            <td>潮科技</td>
-            <td class="text-center">2016/10/07</td>
-            <td class="text-center">已发布</td>
+            <td><?php echo $var['title'] ?></td>
+            <td><?php echo bx_fetch_one("select nickname as num from users where id = {$var['user_id']};")['num']; ?></td>
+            <td><?php echo bx_fetch_one("select name as num from categories where id = {$var['category_id']};")['num']; ?></td>
+            <td class="text-center"><?php echo $var['created'] ?></td>
+            <td class="text-center">
+              <?php if ($var['status'] === 'published'): ?>
+                <?php echo "已发布" ?>
+              <?php elseif ($var['status'] === 'drafted'): ?>
+                <?php echo "草稿"; ?>
+              <?php endif ?>
+            </td>
             <td class="text-center">
               <a href="javascript:;" class="btn btn-default btn-xs">编辑</a>
               <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
             </td>
           </tr>
-          <tr>
-            <td class="text-center"><input type="checkbox"></td>
-            <td>随便一个名称</td>
-            <td>小小</td>
-            <td>潮科技</td>
-            <td class="text-center">2016/10/07</td>
-            <td class="text-center">已发布</td>
-            <td class="text-center">
-              <a href="javascript:;" class="btn btn-default btn-xs">编辑</a>
-              <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-            </td>
-          </tr>
-          <tr>
-            <td class="text-center"><input type="checkbox"></td>
-            <td>随便一个名称</td>
-            <td>小小</td>
-            <td>潮科技</td>
-            <td class="text-center">2016/10/07</td>
-            <td class="text-center">已发布</td>
-            <td class="text-center">
-              <a href="javascript:;" class="btn btn-default btn-xs">编辑</a>
-              <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-            </td>
-          </tr>
+          <?php endforeach ?>
         </tbody>
       </table>
     </div>
