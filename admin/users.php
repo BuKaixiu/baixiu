@@ -1,3 +1,8 @@
+<?php 
+  require_once '../functions.php';
+  bx_get_current_user();
+  $users = bx_fetch( 'select * from users;');
+?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -66,42 +71,20 @@
               </tr>
             </thead>
             <tbody>
+              <?php foreach ($users as $var): ?>
               <tr>
                 <td class="text-center"><input type="checkbox"></td>
-                <td class="text-center"><img class="avatar" src="/static/assets/img/default.png"></td>
-                <td>i@zce.me</td>
-                <td>zce</td>
-                <td>汪磊</td>
-                <td>激活</td>
+                <td class="text-center"><img class="avatar" src="<?php echo $var['avatar'] ?>"></td>
+                <td><?php echo $var['email'] ?></td>
+                <td><?php echo $var['slug'] ?></td>
+                <td><?php echo $var['nickname'] ?></td>
+                <td><?php echo $var['status'] ?></td>
                 <td class="text-center">
                   <a href="post-add.php" class="btn btn-default btn-xs">编辑</a>
                   <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
                 </td>
               </tr>
-              <tr>
-                <td class="text-center"><input type="checkbox"></td>
-                <td class="text-center"><img class="avatar" src="/static/assets/img/default.png"></td>
-                <td>i@zce.me</td>
-                <td>zce</td>
-                <td>汪磊</td>
-                <td>激活</td>
-                <td class="text-center">
-                  <a href="post-add.php" class="btn btn-default btn-xs">编辑</a>
-                  <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-                </td>
-              </tr>
-              <tr>
-                <td class="text-center"><input type="checkbox"></td>
-                <td class="text-center"><img class="avatar" src="/static/assets/img/default.png"></td>
-                <td>i@zce.me</td>
-                <td>zce</td>
-                <td>汪磊</td>
-                <td>激活</td>
-                <td class="text-center">
-                  <a href="post-add.php" class="btn btn-default btn-xs">编辑</a>
-                  <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-                </td>
-              </tr>
+              <?php endforeach ?>
             </tbody>
           </table>
         </div>
