@@ -77,8 +77,8 @@
             <?php endif ?> 
             </td>
             <td class="text-center">
-              <a href="post-add.php" class="btn btn-info btn-xs">批准</a>
-              <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
+              <a href="/admin/api/delete.php?id=<?php echo $value['id'] ?>&action=<?php echo $_SERVER['PHP_SELF'] ?>" class="btn btn-info btn-xs">编辑</a>
+                  <a href="/admin/api/delete.php?id=<?php echo $value['id'] ?>&action=<?php echo $_SERVER['PHP_SELF'] ?>&table=<?php echo 'comments'?>" class="btn btn-danger btn-xs">删除</a>
             </td>
           </tr>
          <?php endforeach ?>
