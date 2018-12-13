@@ -88,13 +88,13 @@
             </thead>
             <tbody>
               <?php foreach ($categories as $var): ?>
-                <tr>
+              <tr>
                 <td class="text-center"><input type="checkbox"></td>
                 <td><?php echo $var['name'] ?></td>
                 <td><?php echo $var['slug'] ?></td>
                 <td class="text-center">
-                  <a href="/admin/api/delete.php?id=<?php echo $var['id'] ?>" class="btn btn-info btn-xs">编辑</a>
-                  <a href="/admin/api/delete.php?id=<?php echo $var['id'] ?>" class="btn btn-danger btn-xs">删除</a>
+                  <a href="/admin/api/delete.php?id=<?php echo $var['id'] ?>&action=<?php echo $_SERVER['PHP_SELF'] ?>" class="btn btn-info btn-xs">编辑</a>
+                  <a href="/admin/api/delete.php?id=<?php echo $var['id'] ?>&action=<?php echo $_SERVER['PHP_SELF'] ?>&table=<?php echo 'categories'?>" class="btn btn-danger btn-xs">删除</a>
                 </td>
               </tr>
               <?php endforeach ?>

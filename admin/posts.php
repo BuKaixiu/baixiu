@@ -69,7 +69,7 @@
         </thead>
         <tbody>
           <?php foreach ($post as $var): ?>
-            <tr>
+          <tr>
             <td class="text-center"><input type="checkbox"></td>
             <td><?php echo $var['title'] ?></td>
             <td><?php echo bx_fetch_one("select nickname as num from users where id = {$var['user_id']};")['num']; ?></td>
@@ -83,8 +83,8 @@
               <?php endif ?>
             </td>
             <td class="text-center">
-              <a href="javascript:;" class="btn btn-default btn-xs">编辑</a>
-              <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
+              <a href="/admin/api/delete.php?id=<?php echo $var['id'] ?>&action=<?php echo $_SERVER['PHP_SELF'] ?>" class="btn btn-info btn-xs">编辑</a>
+                  <a href="/admin/api/delete.php?id=<?php echo $var['id'] ?>&action=<?php echo $_SERVER['PHP_SELF'] ?>&table=<?php echo 'posts'?>" class="btn btn-danger btn-xs">删除</a>
             </td>
           </tr>
           <?php endforeach ?>
