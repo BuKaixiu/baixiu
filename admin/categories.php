@@ -2,11 +2,27 @@
   require_once '../functions.php';  
   bx_get_current_user();
   $categories = bx_fetch('select * from categories;');
+  function addCategories() {
+    if (empty($_POST['name'])) {
+      $GLOBALS['message'] = '请输入名称';
+      return;
+    }
+    if (empty($_POST['slug'])) {
+      $GLOBALS['message'] = '请输入别名';
+      return;
+    }
+    $catName = $_POST['name'];
+    $catSlug = $_POST['slug'];
+    return bx_add("insert into categories values (null, '{$catName}', '{$catSlug}')");
+  }
+  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (addCategories()) header('LOCATION: /admin/categories.php');
+  }
 ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8">  
   <title>Categories &laquo; Admin</title>
   <link rel="stylesheet" href="/static/assets/vendors/bootstrap/css/bootstrap.css">
   <link rel="stylesheet" href="/static/assets/vendors/font-awesome/css/font-awesome.css">
@@ -22,14 +38,16 @@
     <div class="container-fluid">
       <div class="page-title">
         <h1>分类目录</h1>
-      </div>
       <!-- 有错误信息时展示 -->
-      <!-- <div class="alert alert-danger">
-        <strong>错误！</strong>发生XXX错误
-      </div> -->
+        <?php if (isset($message)): ?>
+        <div class="alert alert-danger">
+          <strong>错误！</strong><?php echo $message; ?>
+        </div>
+        <?php endif ?>
+      </div>
       <div class="row">
         <div class="col-md-4">
-          <form>
+          <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" autocomplete="off">
             <h2>添加新分类目录</h2>
             <div class="form-group">
               <label for="name">名称</label>
