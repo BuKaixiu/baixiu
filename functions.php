@@ -69,13 +69,21 @@ function bx_fetch_one($sql) {
 	return isset($rows[0]) ? $rows[0] : null;
 }
 
-function bx_add($sql) {
+/**
+ * [bx_execute description]
+ * @Author   zhengkai
+ * @DateTime 2018-12-13T16:27:36+0800
+ * @param    [type]                   $sql [description]
+ * @return   [type]                        [description]
+ */
+function bx_execute($sql) {
 	$conn = connectDatabase();
 	$query = mysqli_query($conn, $sql);
 	if (!$query) {
 		return false;
 	}
-	mysqli_free_result($query);
+	// 获取受影响的行数
+	$affected = mysqli_affected_rows($conn);
 	mysqli_close($conn);
-	return true;
+	return $affected;
 }
