@@ -1,7 +1,6 @@
 <?php 
   require_once '../functions.php';  
   bx_get_current_user();
-  $categories = bx_fetch('select * from categories;');
   function addCategories() {
     if (empty($_POST['name'])) {
       $GLOBALS['message'] = '请输入名称';
@@ -13,11 +12,15 @@
     }
     $catName = $_POST['name'];
     $catSlug = $_POST['slug'];
-    return bx_add("insert into categories values (null, '{$catName}', '{$catSlug}')");
+    $rows = bx_execute("insert into categories values (null, '{$catSlug}', '{$catName}')");
+    $GLOBALS['success'] = $rows > 0 ? true : false;
+    $GLOBALS['message'] = $rows <= 0 ? '添加失败' : '添加成功';
   }
   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (addCategories()) header('LOCATION: /admin/categories.php');
+    addCategories();
   }
+  // 如果修改操作与操作在一起，那么一定是先做修改在做查询，时效性强
+  $categories = bx_fetch('select * from categories;');
 ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -38,13 +41,19 @@
     <div class="container-fluid">
       <div class="page-title">
         <h1>分类目录</h1>
-      <!-- 有错误信息时展示 -->
-        <?php if (isset($message)): ?>
-        <div class="alert alert-danger">
-          <strong>错误！</strong><?php echo $message; ?>
-        </div>
-        <?php endif ?>
       </div>
+     <!-- 有错误信息时展示 -->
+      <?php if (isset($message)): ?>
+      <?php if ($success): ?>
+      <div class="alert alert-success">
+        <strong>成功！</strong><?php echo $message; ?>
+      </div>
+      <?php else: ?>
+      <div class="alert alert-danger">
+        <strong>错误！</strong><?php echo $message; ?>
+      </div>
+      <?php endif ?>
+      <?php endif ?>
       <div class="row">
         <div class="col-md-4">
           <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" autocomplete="off">
@@ -59,7 +68,7 @@
               <p class="help-block">https://zce.me/category/<strong>slug</strong></p>
             </div>
             <div class="form-group">
-              <button class="btn btn-primary" type="submit">添加</button>
+              <button class="btn btn-primary">添加</button>
             </div>
           </form>
         </div>
