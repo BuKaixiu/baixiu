@@ -30,7 +30,7 @@
       </div> -->
       <div class="page-action">
         <!-- show when multiple checked -->
-        <div class="btn-batch" style="display: none">
+        <div class="btn-batch" id="delete_All" style="display: none">
           <button class="btn btn-info btn-sm">批量批准</button>
           <button class="btn btn-warning btn-sm">批量拒绝</button>
           <button class="btn btn-danger btn-sm">批量删除</button>
@@ -46,7 +46,7 @@
       <table class="table table-striped table-bordered table-hover">
         <thead>
           <tr>
-            <th class="text-center" width="40"><input type="checkbox"></th>
+            <th class="text-center" width="40"><input id="checkAll" type="checkbox"></th>
             <th>作者</th>
             <th>评论</th>
             <th>评论在</th>
@@ -55,7 +55,7 @@
             <th class="text-center" width="100">操作</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="tb">
          <?php foreach ($comments as $value): ?>
             <tr class="danger">
             <td class="text-center"><input type="checkbox"></td>
@@ -77,7 +77,7 @@
             <?php endif ?> 
             </td>
             <td class="text-center">
-              <a href="/admin/api/delete.php?id=<?php echo $value['id'] ?>&action=<?php echo $_SERVER['PHP_SELF'] ?>" class="btn btn-info btn-xs">编辑</a>
+              <a href="/admin/api/delete.php?id=<?php echo $value['id'] ?>&action=<?php echo $_SERVER['PHP_SELF'] ?>&table=<?php echo 'comments'?>" class="btn btn-info btn-xs">编辑</a>
                   <a href="/admin/api/delete.php?id=<?php echo $value['id'] ?>&action=<?php echo $_SERVER['PHP_SELF'] ?>&table=<?php echo 'comments'?>" class="btn btn-danger btn-xs">删除</a>
             </td>
           </tr>
@@ -91,6 +91,7 @@
 
   <script src="/static/assets/vendors/jquery/jquery.js"></script>
   <script src="/static/assets/vendors/bootstrap/js/bootstrap.js"></script>
+  <?php include 'inc/checked.php' ?>
   <script>NProgress.done()</script>
 </body>
 </html>

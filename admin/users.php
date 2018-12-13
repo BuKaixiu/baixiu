@@ -56,12 +56,12 @@
         <div class="col-md-8">
           <div class="page-action">
             <!-- show when multiple checked -->
-            <a class="btn btn-danger btn-sm" href="javascript:;" style="display: none">批量删除</a>
+            <a class="btn btn-danger btn-sm" id="delete_All" href="javascript:;" style="display: none">批量删除</a>
           </div>
           <table class="table table-striped table-bordered table-hover">
             <thead>
                <tr>
-                <th class="text-center" width="40"><input type="checkbox"></th>
+                <th class="text-center" width="40"><input id="checkAll" type="checkbox"></th>
                 <th class="text-center" width="80">头像</th>
                 <th>邮箱</th>
                 <th>别名</th>
@@ -70,7 +70,7 @@
                 <th class="text-center" width="100">操作</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="tb">
               <?php foreach ($users as $var): ?>
               <tr>
                 <td class="text-center"><input type="checkbox"></td>
@@ -80,8 +80,8 @@
                 <td><?php echo $var['nickname'] ?></td>
                 <td><?php echo $var['status'] ?></td>
                 <td class="text-center">
-                  <a href="post-add.php" class="btn btn-default btn-xs">编辑</a>
-                  <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
+                  <a href="/admin/api/delete.php?id=<?php echo $var['id'] ?>&action=<?php echo $_SERVER['PHP_SELF'] ?>&table=<?php echo 'users'?>" class="btn btn-info btn-xs">编辑</a>
+                  <a href="/admin/api/delete.php?id=<?php echo $var['id'] ?>&action=<?php echo $_SERVER['PHP_SELF'] ?>&table=<?php echo 'users'?>" class="btn btn-danger btn-xs">删除</a>
                 </td>
               </tr>
               <?php endforeach ?>
@@ -96,6 +96,7 @@
 
   <script src="/static/assets/vendors/jquery/jquery.js"></script>
   <script src="/static/assets/vendors/bootstrap/js/bootstrap.js"></script>
+  <?php include 'inc/checked.php' ?>
   <script>NProgress.done()</script>
 </body>
 </html>

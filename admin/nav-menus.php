@@ -46,19 +46,19 @@
         <div class="col-md-8">
           <div class="page-action">
             <!-- show when multiple checked -->
-            <a class="btn btn-danger btn-sm" href="javascript:;" style="display: none">批量删除</a>
+            <a class="btn btn-danger btn-sm" id="delete_All" href="javascript:;" style="display: none">批量删除</a>
           </div>
           <table class="table table-striped table-bordered table-hover">
             <thead>
               <tr>
-                <th class="text-center" width="40"><input type="checkbox"></th>
+                <th class="text-center" width="40"><input id="checkAll" type="checkbox"></th>
                 <th>文本</th>
                 <th>标题</th>
                 <th>链接</th>
                 <th class="text-center" width="100">操作</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="tb">
               <tr>
                 <td class="text-center"><input type="checkbox"></td>
                 <td><i class="fa fa-glass"></i>奇趣事</td>
@@ -97,6 +97,7 @@
 
   <script src="/static/assets/vendors/jquery/jquery.js"></script>
   <script src="/static/assets/vendors/bootstrap/js/bootstrap.js"></script>
+  <?php include 'inc/checked.php' ?>
   <script>NProgress.done()</script>
 </body>
 </html>
