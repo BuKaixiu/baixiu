@@ -93,8 +93,8 @@
                 <td><?php echo $var['name'] ?></td>
                 <td><?php echo $var['slug'] ?></td>
                 <td class="text-center">
-                  <a href="javascript:;" class="btn btn-info btn-xs">编辑</a>
-                  <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
+                  <a href="/admin/api/delete.php?id=<?php echo $var['id'] ?>" class="btn btn-info btn-xs">编辑</a>
+                  <a href="/admin/api/delete.php?id=<?php echo $var['id'] ?>" class="btn btn-danger btn-xs">删除</a>
                 </td>
               </tr>
               <?php endforeach ?>
