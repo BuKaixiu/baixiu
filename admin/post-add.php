@@ -1,3 +1,8 @@
+<?php  
+  require_once '../functions.php';
+  bx_get_current_user();
+  $categories = bx_fetch("select name from categories");
+?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -49,7 +54,9 @@
             <label for="category">所属分类</label>
             <select id="category" class="form-control" name="category">
               <option value="1">未分类</option>
-              <option value="2">潮生活</option>
+              <?php foreach ($categories as $var): ?>
+              <option value=""><?php echo $var['name'] ?></option>
+              <?php endforeach ?>
             </select>
           </div>
           <div class="form-group">

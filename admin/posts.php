@@ -2,6 +2,8 @@
   require_once '../functions.php';
   bx_get_current_user();
   $post = bx_fetch("select * from posts");
+  $categories = bx_fetch("select name from categories");
+  // var_dump($categories);
  ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -34,7 +36,9 @@
         <form class="form-inline">
           <select name="" class="form-control input-sm">
             <option value="">所有分类</option>
-            <option value="">未分类</option>
+            <?php foreach ($categories as $var): ?>
+              <option value=""><?php echo $var['name'] ?></option>
+            <?php endforeach ?>
           </select>
           <select name="" class="form-control input-sm">
             <option value="">所有状态</option>
