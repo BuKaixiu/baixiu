@@ -21,6 +21,7 @@
   }
   // 如果修改操作与操作在一起，那么一定是先做修改在做查询，时效性强
   $categories = bx_fetch('select * from categories;');
+  var_dump($categories);
 ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -75,7 +76,7 @@
         <div class="col-md-8">
           <div class="page-action">
             <!-- show when multiple checked -->
-            <a class="btn btn-danger btn-sm" id="delete_All" href="javascript:;" style="display: none">批量删除</a>
+            <a class="btn btn-danger btn-sm" id="delete_All" href="/admin/api/delete.php" style="display: none">批量删除</a>
           </div>
           <table class="table table-striped table-bordered table-hover">
             <thead>
@@ -89,7 +90,7 @@
             <tbody id="tb">
               <?php foreach ($categories as $var): ?>
               <tr>
-                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center"><input type="checkbox" data-id="<?php echo $var['id'] ?>" data-action="<?php echo $_SERVER['PHP_SELF'] ?>" data-table="<?php echo 'categories'?>"></td>
                 <td><?php echo $var['name'] ?></td>
                 <td><?php echo $var['slug'] ?></td>
                 <td class="text-center">

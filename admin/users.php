@@ -73,7 +73,7 @@
             <tbody id="tb">
               <?php foreach ($users as $var): ?>
               <tr>
-                <td class="text-center"><input type="checkbox"></td>
+                <td class="text-center" data-id="<?php echo $var['id'] ?>" data-action="<?php echo $_SERVER['PHP_SELF'] ?>" data-table="<?php echo 'users'?>"><input type="checkbox"></td>
                 <td class="text-center"><img class="avatar" src="<?php echo $var['avatar'] ?>"></td>
                 <td><?php echo $var['email'] ?></td>
                 <td><?php echo $var['slug'] ?></td>

@@ -30,10 +30,10 @@
       </div> -->
       <div class="page-action">
         <!-- show when multiple checked -->
-        <div class="btn-batch" id="delete_All" style="display: none">
-          <button class="btn btn-info btn-sm">批量批准</button>
-          <button class="btn btn-warning btn-sm">批量拒绝</button>
-          <button class="btn btn-danger btn-sm">批量删除</button>
+        <div class="btn-batch" style="display: inline-block;">
+          <a class="btn btn-danger btn-sm" href="javascript:;" style="display: none">批量批准</a>
+          <a class="btn btn-danger btn-sm" href="javascript:;" style="display: none">批量拒绝</a>
+          <a class="btn btn-danger btn-sm" id="delete_All" href="/admin/api/delete.php" style="display: none">批量删除</a>
         </div>
         <ul class="pagination pagination-sm pull-right">
           <li><a href="#">上一页</a></li>
@@ -58,7 +58,7 @@
         <tbody id="tb">
          <?php foreach ($comments as $value): ?>
             <tr class="danger">
-            <td class="text-center"><input type="checkbox"></td>
+            <td class="text-center"><input type="checkbox" data-id="<?php echo $value['id'] ?>" data-action="<?php echo $_SERVER['PHP_SELF'] ?>" data-table="<?php echo 'comments'?>"></td>
             <td><?php echo $value['author']; ?></td>
             <td><?php echo $value['content'] ?></td>
             <td>

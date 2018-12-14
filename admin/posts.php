@@ -32,7 +32,7 @@
       </div> -->
       <div class="page-action">
         <!-- show when multiple checked -->
-        <a class="btn btn-danger btn-sm" id="delete_All" href="javascript:;" style="display: none">批量删除</a>
+       <a class="btn btn-danger btn-sm" id="delete_All" href="/admin/api/delete.php" style="display: none">批量删除</a>
         <form class="form-inline">
           <select name="" class="form-control input-sm">
             <option value="">所有分类</option>
@@ -70,7 +70,7 @@
         <tbody id="tb">
           <?php foreach ($post as $var): ?>
           <tr>
-            <td class="text-center"><input type="checkbox"></td>
+            <td class="text-center"><input type="checkbox" data-id="<?php echo $var['id'] ?>" data-action="<?php echo $_SERVER['PHP_SELF'] ?>" data-table="<?php echo 'posts'?>"></td>
             <td><?php echo $var['title'] ?></td>
             <td><?php echo bx_fetch_one("select nickname as num from users where id = {$var['user_id']};")['num']; ?></td>
             <td><?php echo bx_fetch_one("select name as num from categories where id = {$var['category_id']};")['num']; ?></td>
