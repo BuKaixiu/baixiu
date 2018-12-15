@@ -16,12 +16,38 @@
     $GLOBALS['success'] = $rows > 0 ? true : false;
     $GLOBALS['message'] = $rows <= 0 ? '添加失败' : '添加成功';
   }
-  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    addCategories();
+  function editCategoires() {
+    global $current_edit_categories;
+    $id = $current_edit_categories['id'];
+    $catName = empty($_POST['name']) ? $current_edit_categories['name'] : $_POST['name'];
+    $current_edit_categories['name'] = $catName;
+    $catSlug = empty($_POST['slug']) ? $current_edit_categories['name'] : $_POST['slug'];
+    $current_edit_categories['slug'] = $catSlug;
+    $rows = bx_execute("update categories set name = '{$catName}', slug = '{$catSlug}' where id = {$id};");
+    $GLOBALS['success'] = $rows > 0 ? true : false;
+    $GLOBALS['message'] = $rows <= 0 ? '编辑失败' : '编辑成功';
+
   }
-  // 如果修改操作与操作在一起，那么一定是先做修改在做查询，时效性强
+  if (empty($_GET['id'])) {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST')  {
+      addCategories();
+    }
+  } else {
+    $current_edit_categories = bx_fetch_one("select * from categories where id = {$_GET['id']}");
+    if ($_SERVER['REQUEST_METHOD'] === 'POST')  {
+      editCategoires();
+    }
+  }
+  // if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  //   if (empty($_GET['id'])) {
+  //       addCategories();
+  //   } else {
+  //       editCategoires();
+  //   }  
+  // }
+  // 如果编辑操作与操作在一起，那么一定是先做编辑在做查询，时效性强
   $categories = bx_fetch('select * from categories;');
-  var_dump($categories);
+  // var_dump($categories);
 ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -57,6 +83,23 @@
       <?php endif ?>
       <div class="row">
         <div class="col-md-4">
+          <?php if (isset($current_edit_categories)): ?>
+          <form action="<?php echo $_SERVER['PHP_SELF'] ?>?id=<?php echo $current_edit_categories['id'] ?>" method="POST" autocomplete="off">
+            <h2>编辑《<?php echo $current_edit_categories['name'] ?>》</h2>
+            <div class="form-group">
+              <label for="name">名称</label>
+              <input id="name" class="form-control" name="name" type="text" value="<?php echo $current_edit_categories['name'] ?>" placeholder="分类名称">
+            </div>
+            <div class="form-group">
+              <label for="slug">别名</label>
+              <input id="slug" class="form-control" name="slug" type="text" value="<?php echo $current_edit_categories['slug'] ?>" placeholder="slug">
+              <p class="help-block">https://zce.me/category/<strong>slug</strong></p>
+            </div>
+            <div class="form-group">
+              <button class="btn btn-primary">保存</button>
+            </div>
+          </form>
+          <?php else : ?>
           <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" autocomplete="off">
             <h2>添加新分类目录</h2>
             <div class="form-group">
@@ -72,6 +115,7 @@
               <button class="btn btn-primary">添加</button>
             </div>
           </form>
+          <?php endif ?>
         </div>
         <div class="col-md-8">
           <div class="page-action">
@@ -94,7 +138,7 @@
                 <td><?php echo $var['name'] ?></td>
                 <td><?php echo $var['slug'] ?></td>
                 <td class="text-center">
-                  <a href="/admin/api/delete.php?id=<?php echo $var['id'] ?>&action=<?php echo $_SERVER['PHP_SELF'] ?>&table=<?php echo 'categories'?>" class="btn btn-info btn-xs">编辑</a>
+                  <a href="<?php echo $_SERVER['PHP_SELF'] ?>?id=<?php echo $var['id'] ?>" class="btn btn-info btn-xs">编辑</a>
                   <a href="/admin/api/delete.php?id=<?php echo $var['id'] ?>&action=<?php echo $_SERVER['PHP_SELF'] ?>&table=<?php echo 'categories'?>" class="btn btn-danger btn-xs">删除</a>
                 </td>
               </tr>

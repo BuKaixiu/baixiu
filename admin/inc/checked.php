@@ -16,28 +16,35 @@
 <script>
   $(function ($) {
     var $tb = $('#tb input');
-    console.log($tb);
+    // console.log($tb);
+    // console.log('id======' + $tb.data('id'));
     var $delete = $('#delete_All');
     var $checkAll = $('#checkAll');
     // 定义一个数组记录被选中的
     var allCheckeds = [];
-    $checkAll.on('change', function () {
-      $tb.prop('checked', $checkAll.prop('checked'));
-      
-    })
+    // $checkAll.on('change', function () {
+    //   $tb.prop('checked', $checkAll.prop('checked'));
+    //   if($checkAll.prop('checked')) {
+    //     $('#tb :input').each(function (i, itme) {
+    //       itme.data('id');
+    //     });
+    //   }
+    // })
     console.log(allCheckeds);
     $tb.on('change', function () {
       var id = $(this).data('id');
       var action = $(this).data('action');
       var table = $(this).data('table');
       var check = $tb.length - 1;
-      console.log(check + "=====" + allCheckeds.length);
       $checkAll.prop('checked', check == allCheckeds.length);
       if ($(this).prop('checked')) {
         allCheckeds.push(id);
       }else {
         allCheckeds.splice(allCheckeds.indexOf(id), 1);
       }
+
+      // console.log(check + "=====" + allCheckeds.length);  
+      // console.log(allCheckeds);
       allCheckeds.length && checkAll ? $delete.fadeIn(200) : $delete.fadeOut(200);
       $delete.prop('search', '?id=' + allCheckeds + '&' + 'action=' + action + '&' + 'table=' + table);
     })
